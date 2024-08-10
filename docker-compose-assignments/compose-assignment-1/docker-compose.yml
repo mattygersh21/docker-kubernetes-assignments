@@ -1,0 +1,24 @@
+version: '2'
+
+services:
+  drupal:
+    image: drupal:9
+    ports:
+      - 8080:80
+    volumes:
+      # volumes are copied and pasted from the Volumes section of hub.docker.com/_/drupal, where it states 'This can then be bind-mounted into a new container:'
+      - drupal-modules:/var/www/html/modules
+      - drupal-profiles:/var/www/html/profiles
+      - drupal-sites:/var/www/html/sites
+      - drupal-themes:/var/www/html/themes
+  postgres:
+    image: postgres:14
+    environment:
+      - POSTGRES_PASSWORD=mypassword
+    # no ports are specified for the postgres service as the two services will be on the same network and they will be able to 'see' one another and connect
+
+volumes:
+  drupal-modules:
+  drupal-profiles:
+  drupal-sites:
+  drupal-themes:
